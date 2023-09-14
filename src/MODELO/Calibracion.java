@@ -13,15 +13,16 @@ public class Calibracion {
     private String fecha;
     private String mediciones;
     private Instrumento instrumento;
+    
 
     public Calibracion() {
     }
 
-    public Calibracion(String numero, String fecha, String mediciones, Instrumento instrumento) {
+    public Calibracion(String numero, String fecha, String mediciones) {
         this.numero = numero;
         this.fecha = fecha;
         this.mediciones = mediciones;
-        this.instrumento = instrumento;
+       // this.instrumento = instrumento;
     }
 
     public String getNumero() {

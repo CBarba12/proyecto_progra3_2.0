@@ -803,9 +803,11 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                              <Component id="jlblInfoInstrumento" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="738" max="32767" attributes="0"/>
+                              <EmptySpace pref="68" max="32767" attributes="0"/>
+                              <Component id="jlblInfoInstrumento" min="-2" pref="73" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jlblInfoInstrumento_2" min="-2" pref="526" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="141" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -813,7 +815,10 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jlblInfoInstrumento" min="-2" pref="18" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jlblInfoInstrumento" alignment="3" min="-2" pref="18" max="-2" attributes="0"/>
+                                  <Component id="jlblInfoInstrumento_2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -825,6 +830,15 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="33" green="0" red="cc" type="rgb"/>
                         </Property>
+                        <Property name="text" type="java.lang.String" value="hola "/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jlblInfoInstrumento_2">
+                      <Properties>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="33" green="0" red="cc" type="rgb"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="jLabel7"/>
                       </Properties>
                     </Component>
                   </SubComponents>

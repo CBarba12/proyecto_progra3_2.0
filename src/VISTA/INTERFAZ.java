@@ -81,6 +81,7 @@ public class INTERFAZ extends javax.swing.JFrame {
         jPanelCalibraciones = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jlblInfoInstrumento = new javax.swing.JLabel();
+        jlblInfoInstrumento_2 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jlblNumeroCalibracion = new javax.swing.JLabel();
         jlblMedicionesCalibracion = new javax.swing.JLabel();
@@ -529,21 +530,29 @@ public class INTERFAZ extends javax.swing.JFrame {
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Instrumento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 13))); // NOI18N
 
         jlblInfoInstrumento.setForeground(new java.awt.Color(204, 0, 51));
+        jlblInfoInstrumento.setText("hola ");
+
+        jlblInfoInstrumento_2.setForeground(new java.awt.Color(204, 0, 51));
+        jlblInfoInstrumento_2.setText("jLabel7");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jlblInfoInstrumento)
-                .addContainerGap(738, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE)
+                .addComponent(jlblInfoInstrumento, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlblInfoInstrumento_2, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(141, 141, 141))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jlblInfoInstrumento, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlblInfoInstrumento, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblInfoInstrumento_2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1605,7 +1614,15 @@ public class INTERFAZ extends javax.swing.JFrame {
         this.tabla4Mediciones = tabla4Mediciones;
     }
 
+    public JLabel getJlblInfoInstrumento_2() {
+        return jlblInfoInstrumento_2;
+    }
 
+    public void setJlblInfoInstrumento_2(JLabel jlblInfoInstrumento_2) {
+        this.jlblInfoInstrumento_2 = jlblInfoInstrumento_2;
+    }
+
+     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelPrincipal;
     private javax.swing.JTabbedPane SUBPANEL;
@@ -1656,6 +1673,7 @@ public class INTERFAZ extends javax.swing.JFrame {
     private javax.swing.JLabel jlblDescripcion;
     private javax.swing.JLabel jlblFecha;
     private javax.swing.JLabel jlblInfoInstrumento;
+    private javax.swing.JLabel jlblInfoInstrumento_2;
     private javax.swing.JLabel jlblMaximo;
     private javax.swing.JLabel jlblMedicionesCalibracion;
     private javax.swing.JLabel jlblMinimo;

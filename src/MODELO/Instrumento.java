@@ -4,6 +4,8 @@
  */
 package MODELO;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Raquel
@@ -15,6 +17,7 @@ public class Instrumento {
     private String minimo;
     private String tolerancia;
     private TipoInstrumentos tipo;
+    private   ArrayList<Calibracion>list_calibraciones;
 
     public Instrumento() {
     }
@@ -26,6 +29,7 @@ public class Instrumento {
         this.minimo = minimo;
         this.tolerancia = tolerancia;
         this.tipo = tipo;
+        list_calibraciones=new ArrayList<>();
     }
 
     public String getSerie() {
@@ -80,7 +84,16 @@ public class Instrumento {
     public String toString() {
         return "Instrumento{" + "serie=" + serie + ", descripcion=" + descripcion + ", maximo=" + maximo + ", minimo=" + minimo + ", tolerancia=" + tolerancia + ", tipo=" + tipo + '}';
     }
-    
+
+    public ArrayList<Calibracion> getList_calibraciones() {
+        return list_calibraciones;
+    }
+
+    public void setList_calibraciones(ArrayList<Calibracion> list_calibraciones) {
+        this.list_calibraciones = list_calibraciones;
+    }
+
+
     
     
 }
