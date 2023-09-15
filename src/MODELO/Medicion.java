@@ -12,6 +12,7 @@ public class Medicion {
     private String numero;
     private String referencia;
     private String lectura;
+    Calibracion calibracion;
 
     public Medicion() {
     }
@@ -44,6 +45,14 @@ public class Medicion {
 
     public void setLectura(String lectura) {
         this.lectura = lectura;
+    }
+
+    public Calibracion getCalibracion() {
+        return calibracion;
+    }
+
+    public void setCalibracion(Calibracion calibracion) {
+        this.calibracion = calibracion;
     }
 
 }

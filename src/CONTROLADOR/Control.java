@@ -105,7 +105,13 @@ public class Control implements ActionListener, MouseListener {
 
         if (e.getSource().equals(vista.getBtnBorrarCalibracion())) {
             borrarCalibracion();
+        } 
+        
+        if (e.getSource().equals(vista.getBtnBuscarCalibracion())) {
+            buscarCalibracion();
         }
+        
+        
 
     }
 
@@ -119,9 +125,8 @@ public class Control implements ActionListener, MouseListener {
             clickTablaInstrumento(e);
         }
         if (e.getSource().equals(vista.getTabla3Calibraciones())) {
-             clickTablaCalibracion(e);
+            clickTablaCalibracion(e);
         }
-        
 
     }
 
@@ -275,6 +280,7 @@ public class Control implements ActionListener, MouseListener {
 
         String seleccion;
         int seleccion_2;
+
         if (vista.getTabla2Instrumentos().getSelectedRow() >= 0) {
             // Seleccionar una fila existente para editar
             int selectedRow = vista.getTabla2Instrumentos().getSelectedRow();
@@ -465,6 +471,11 @@ public class Control implements ActionListener, MouseListener {
     //--------------
     public void guardarCalibracion() {
         // saber si hay un instrumento dentro del array para que pueda ser agregado
+
+        String numero_medicione;
+        String referencia;
+        String lectura;
+
         int posicion = -1;
 
         for (int i = 0; i < modelo.getArrayI().getCantidad(); i++) {
@@ -475,20 +486,24 @@ public class Control implements ActionListener, MouseListener {
 
         if (posicion >= 0) {
 
+            int selectedRow = vista.getTabla3Calibraciones().getSelectedRow();
+
             if (vista.getTabla3Calibraciones().getSelectedRow() >= 0) {
                 // Seleccionar una fila existente para editar
-                int selectedRow = vista.getTabla3Calibraciones().getSelectedRow();
-                // Modificar los valores de la fila seleccionada
 
+                // Modificar los valores de la fila seleccionada
                 vista.getTabla3Calibraciones().setValueAt(vista.getJtxtNumCalibracion().getText(), selectedRow, 0);
                 vista.getTabla3Calibraciones().setValueAt(vista.getJtxtFecha().getText(), selectedRow, 1);
                 vista.getTabla3Calibraciones().setValueAt(vista.getJtxtMedicionesCalibracion().getText(), selectedRow, 2);
 
-                Calibracion p = new Calibracion(vista.getJtxtNumCalibracion().getText(), vista.getJtxtFecha().getText(), vista.getJtxtMedicionesCalibracion().getText());
-                p.setInstrumento(modelo.getArrayI().getElemento(posicion));    // se busca en el vector de intrumento segun la posicion mandada y se introduce el instrumento
-                modelo.getArrayC().getArrayList().add(p);
+                modelo.getArrayC().getArrayList().get(selectedRow).setMediciones(vista.getJtxtMedicionesCalibracion().getText());
+                modelo.getArrayC().getArrayList().get(selectedRow).setMediciones(vista.getJtxtFecha().getText());
 
+//                Calibracion p = new Calibracion(vista.getJtxtNumCalibracion().getText(), vista.getJtxtFecha().getText(), vista.getJtxtMedicionesCalibracion().getText());
+//                p.setInstrumento(modelo.getArrayI().getElemento(posicion));    // se busca en el vector de intrumento segun la posicion mandada y se introduce el instrumento
+//                modelo.getArrayC().getArrayList().add(p);
             } else {
+
                 // No se seleccionó ninguna fila, agregar un nuevo registro
                 String numero = vista.getJtxtNumCalibracion().getText();
                 String mediciones = vista.getJtxtMedicionesCalibracion().getText();
@@ -503,8 +518,18 @@ public class Control implements ActionListener, MouseListener {
                 p.setInstrumento(modelo.getArrayI().getElemento(posicion));    // se busca en el vector de intrumento segun la posicion mandada y se introduce el instrumento
                 modelo.getArrayC().getArrayList().add(p);
 
-//                Calibracion p = new Calibracion(numero, fecha, mediciones);
-//                modelo.getArrayI().getElemento(posicion).getList_calibraciones().add(p);
+                for (int i = 0; i < Integer.parseInt(mediciones); i++) {
+
+                    numero_medicione = String.valueOf(i + 1);
+                    referencia = JOptionPane.showInputDialog("Ingrese el valor de la referencia de la medicion numero " + numero_medicione);
+                    lectura = JOptionPane.showInputDialog("Ingrese el valor  de la lectura de la medicion numero " + numero_medicione);
+
+                    Medicion e = new Medicion(numero_medicione, referencia, lectura);
+                    e.setCalibracion(p);
+                    modelo.getArrayM().getArrayList().add(e);
+
+                }
+
                 modelo.getModeloCalibracion().addRow(columna);
                 vista.getTabla3Calibraciones().setModel(modelo.getModeloCalibracion());
 
@@ -532,11 +557,14 @@ public class Control implements ActionListener, MouseListener {
 
         DefaultTableModel modelo = (DefaultTableModel) vista.getTabla4Mediciones().getModel();
         modelo.setRowCount(0);
+        
+            vista.getJtxtFecha().setEnabled(true);
+            vista.getJtxtMedicionesCalibracion().setEnabled(true);
 
     }
 
     public void borrarCalibracion() {
- 
+
         if (vista.getTabla3Calibraciones().getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "Debes elegir la fila a eliminar", "ERROR", JOptionPane.ERROR_MESSAGE);
         } else {
@@ -545,6 +573,8 @@ public class Control implements ActionListener, MouseListener {
             String numero = (String) vista.getTabla3Calibraciones().getValueAt(linea, 0);
 
             modelo.getModeloCalibracion().removeRow(linea);
+
+            modelo.getModeloMed().setRowCount(0);
             //vista.getModeloTabla2().removeRow(linea);
 
             vista.getJtxtFecha().setText("");
@@ -555,8 +585,7 @@ public class Control implements ActionListener, MouseListener {
                     modelo.getArrayC().getArrayList().remove(i);
                 }
             }
-            
-            
+
             vista.getBtnBorrarCalibracion().setEnabled(false);
         }
 
@@ -565,42 +594,64 @@ public class Control implements ActionListener, MouseListener {
     public void clickTablaCalibracion(java.awt.event.MouseEvent evt) {
         String mediciones;
         if (evt.getClickCount() == 1) { // Detectar un solo clic
-            
+
             vista.getBtnBorrarCalibracion().setEnabled(true);
-           
+
             int selectedRow = vista.getTabla3Calibraciones().getSelectedRow();
             if (selectedRow >= 0) {
-                
+
                 String numero = (String) vista.getTabla3Calibraciones().getValueAt(selectedRow, 0);
                 String fecha = (String) vista.getTabla3Calibraciones().getValueAt(selectedRow, 1);
                 mediciones = String.valueOf(vista.getTabla3Calibraciones().getValueAt(selectedRow, 2));
 
-                
                 vista.getJtxtNumCalibracion().setText(numero);
                 vista.getJtxtFecha().setText(fecha);
                 vista.getJtxtMedicionesCalibracion().setText(mediciones);
-               
-                
-                
+
                 int med = Integer.parseInt(mediciones);
-                insertarTabla4(med);
+
+                modelo.getModeloMed().setRowCount(0);
+                for (int i = 0; i < modelo.getArrayM().getArrayList().size(); i++) {
+                    if (modelo.getArrayM().getArrayList().get(i).getCalibracion().getNumero().equals(numero)) {
+
+                        Object[] columna = new Object[modelo.getModeloMed().getColumnCount()];
+                        columna[0] = modelo.getArrayM().getArrayList().get(i).getNumero();
+                        columna[1] = modelo.getArrayM().getArrayList().get(i).getReferencia();
+                        columna[2] = modelo.getArrayM().getArrayList().get(i).getLectura();
+
+                        modelo.getModeloMed().addRow(columna);
+
+                        vista.getTabla4Mediciones().setModel(modelo.getModeloMed());
+
+                    }
+                }
+
             }
+
+            vista.getJtxtNumCalibracion().setEnabled(false);
+            vista.getJtxtFecha().setEnabled(false);
+            vista.getJtxtMedicionesCalibracion().setEnabled(false);
 
         }
 
     }
+
     public void insertarTabla4(int numMed) {
         modelo.getModeloMed().setRowCount(0);
+
         for (int i = 0; i < numMed; i++) {
-            Object[] columna = new Object[ modelo.getModeloMed().getColumnCount()];
+            Object[] columna = new Object[modelo.getModeloMed().getColumnCount()];
             columna[0] = i + 1;
             modelo.getModeloMed().addRow(columna);
         }
-        vista.getTabla4Mediciones().setModel( modelo.getModeloMed());
+        vista.getTabla4Mediciones().setModel(modelo.getModeloMed());
     }
-    
-    
-    
+
+    //guardar mediciones----------------------
+    public void guardarMediciones() {
+
+    }
+
     public void buscarCalibracion() {
 
         String cadena;
@@ -608,6 +659,7 @@ public class Control implements ActionListener, MouseListener {
         bandera = false;
 
         for (int i = 0; i < vista.getTabla3Calibraciones().getRowCount(); i++) {
+            
             cadena = (String) vista.getTabla3Calibraciones().getValueAt(i, 0);
 
             if (cadena.equals(vista.getJtxtNumBusqCalib().getText())) {
@@ -623,6 +675,10 @@ public class Control implements ActionListener, MouseListener {
 
         }
     }
+    
+  
+    
+    
 
     @Override
     public void mousePressed(java.awt.event.MouseEvent e) {
