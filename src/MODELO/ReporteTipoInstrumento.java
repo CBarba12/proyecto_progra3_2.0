@@ -39,7 +39,7 @@ public class ReporteTipoInstrumento {
         documento.open();
         titulo.setAlignment(1);
         documento.add(titulo);
-        documento.add(new Paragraph("Reporte Tipo Instrumento"));
+        //documento.add(new Paragraph("Reporte Tipo Instrumento"));
         documento.add(Chunk.NEWLINE);
 
         PdfPTable tabla = new PdfPTable(3);

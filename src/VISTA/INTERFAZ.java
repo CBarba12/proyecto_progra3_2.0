@@ -25,6 +25,8 @@ public class INTERFAZ extends javax.swing.JFrame {
         ImageIcon imagenBotonReporte = new ImageIcon("src/imagenes/imagenPdf.png");
         Icon imagenReporte = new ImageIcon(imagenBotonReporte.getImage().getScaledInstance(25, 20, Image.SCALE_DEFAULT));
         btnReporteTI.setIcon(imagenReporte);
+        btnReporteInstrumentos.setIcon(imagenReporte);
+        btnReporteCalibracion.setIcon(imagenReporte);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
@@ -530,10 +532,8 @@ public class INTERFAZ extends javax.swing.JFrame {
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Instrumento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 13))); // NOI18N
 
         jlblInfoInstrumento.setForeground(new java.awt.Color(204, 0, 51));
-        jlblInfoInstrumento.setText("hola ");
 
         jlblInfoInstrumento_2.setForeground(new java.awt.Color(204, 0, 51));
-        jlblInfoInstrumento_2.setText("jLabel7");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);

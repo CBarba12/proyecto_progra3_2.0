@@ -22,7 +22,7 @@ public class Calibracion {
         this.numero = numero;
         this.fecha = fecha;
         this.mediciones = mediciones;
-       // this.instrumento = instrumento;
+       
     }
 
     public String getNumero() {

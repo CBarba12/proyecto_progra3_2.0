@@ -6,12 +6,18 @@ package CONTROLADOR;
 
 import VISTA.*;
 import MODELO.*;
+import com.itextpdf.text.DocumentException;
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import static java.lang.Math.random;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.w3c.dom.events.MouseEvent;
@@ -38,6 +44,7 @@ public class Control implements ActionListener, MouseListener {
         this.vista.getBtnLimpiarTI().addActionListener(this);
         this.vista.getBtnBorrarTI().addActionListener(this);
         this.vista.getTabla1().addMouseListener(this);
+        this.vista.getBtnReporteTI().addActionListener(this);
 
         // ------------------------INSTRUMENTO----------------------
         this.vista.getBtnGuardarInstrumentos().addActionListener(this);
@@ -45,6 +52,7 @@ public class Control implements ActionListener, MouseListener {
         this.vista.getBtnBorrarInstrumentos().addActionListener(this);
         this.vista.getTabla2Instrumentos().addMouseListener(this);
         this.vista.getBtnBuscarInstrumentos().addActionListener(this);
+        this.vista.getBtnReporteInstrumentos().addActionListener(this);
 
         // ------------------------Calibraciones----------------------
         this.vista.getBtnGuardarCalibracion().addActionListener(this);
@@ -52,6 +60,7 @@ public class Control implements ActionListener, MouseListener {
         this.vista.getBtnLimpiarCalibracion().addActionListener(this);
         this.vista.getBtnBorrarCalibracion().addActionListener(this);
         this.vista.getBtnBuscarCalibracion().addActionListener(this);
+        this.vista.getBtnReporteCalibracion().addActionListener(this);
 
     }
 
@@ -79,6 +88,21 @@ public class Control implements ActionListener, MouseListener {
         if (e.getSource().equals(vista.getBtnBuscarTI())) {
             buscarTipoInstrumento();
         }
+        if (e.getSource().equals(vista.getBtnReporteTI())) {
+            ReporteTipoInstrumento reporte = new ReporteTipoInstrumento(vista.getJtxtCodigo().getText(), vista.getJtxtNombre().getText(), vista.getJtxtUnidad().getText(), modelo.getArrayTI());
+            try {
+                reporte.crearReporte();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (DocumentException ex) {
+                Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                abrirPDFTipoInstrumento();
+            } catch (IOException ex) {
+                Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
         //--Eventos de instrumentos
         if (e.getSource().equals(vista.getBtnGuardarInstrumentos())) {
@@ -93,6 +117,21 @@ public class Control implements ActionListener, MouseListener {
         if (e.getSource().equals(vista.getBtnBuscarInstrumentos())) {
             this.buscarInstrumento();
         }
+        if (e.getSource().equals(vista.getBtnReporteInstrumentos())) {
+            ReporteInstrumento reporte = new ReporteInstrumento(vista.getJtxtNumSerie().getText(), vista.getJtxtDescripcion().getText(), vista.getJtxtMinimo().getText(),vista.getJtxtMaximo().getText(),vista.getJtxtTolerancia().getText() ,modelo.getArrayInstrumento());
+            try {
+                reporte.crearReporte();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (DocumentException ex) {
+                Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                abrirPDFInstrumento();
+            } catch (IOException ex) {
+                Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
         //-----------------------------evento de calibraciones  
         //--Eventos de calibracion
@@ -105,14 +144,41 @@ public class Control implements ActionListener, MouseListener {
 
         if (e.getSource().equals(vista.getBtnBorrarCalibracion())) {
             borrarCalibracion();
-        } 
-        
+        }
+
         if (e.getSource().equals(vista.getBtnBuscarCalibracion())) {
             buscarCalibracion();
         }
-        
-        
+        if (e.getSource().equals(vista.getBtnReporteCalibracion())) {
+            ReporteCalibraciones reporte = new ReporteCalibraciones(vista.getJtxtNumCalibracion().getText(), vista.getJtxtFecha().getText(), vista.getJtxtMedicionesCalibracion().getText() ,modelo.getArrayCalibraciones());
+            try {
+                reporte.crearReporte();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (DocumentException ex) {
+                Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                abrirPDFCalibraciones();
+            } catch (IOException ex) {
+                Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
+    }
+
+    public void abrirPDFTipoInstrumento() throws IOException {
+        File path = new File("TipoInstrumento.pdf");
+        Desktop.getDesktop().open(path);
+    }
+
+    public void abrirPDFInstrumento() throws IOException {
+        File path = new File("Instrumento.pdf");
+        Desktop.getDesktop().open(path);
+    }
+     public void abrirPDFCalibraciones() throws IOException {
+        File path = new File("Calibraciones.pdf");
+        Desktop.getDesktop().open(path);
     }
 
     //---Evento Mouse Clicked---
@@ -557,9 +623,9 @@ public class Control implements ActionListener, MouseListener {
 
         DefaultTableModel modelo = (DefaultTableModel) vista.getTabla4Mediciones().getModel();
         modelo.setRowCount(0);
-        
-            vista.getJtxtFecha().setEnabled(true);
-            vista.getJtxtMedicionesCalibracion().setEnabled(true);
+
+        vista.getJtxtFecha().setEnabled(true);
+        vista.getJtxtMedicionesCalibracion().setEnabled(true);
 
     }
 
@@ -659,7 +725,7 @@ public class Control implements ActionListener, MouseListener {
         bandera = false;
 
         for (int i = 0; i < vista.getTabla3Calibraciones().getRowCount(); i++) {
-            
+
             cadena = (String) vista.getTabla3Calibraciones().getValueAt(i, 0);
 
             if (cadena.equals(vista.getJtxtNumBusqCalib().getText())) {
@@ -675,10 +741,6 @@ public class Control implements ActionListener, MouseListener {
 
         }
     }
-    
-  
-    
-    
 
     @Override
     public void mousePressed(java.awt.event.MouseEvent e) {
